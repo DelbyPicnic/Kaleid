@@ -10,6 +10,8 @@ pygame.init()
 screen = pygame.display.set_mode((1366, 768))
 pygame.display.toggle_fullscreen()
 
+fOut = open('bookmarks.txt','w')
+
 width = screen.get_width
 height = screen.get_height
 
@@ -20,8 +22,8 @@ rot = 0
 scaleX = 500
 scaleY = 250 
 
-screen_left = pygame.Surface((683, 768))
-screen_right = pygame.Surface((683, 768))
+screen_left = pygame.Surface((678, 758))
+screen_right = pygame.Surface((678, 758))
 screen_feedback = pygame.Surface((1366, 768))
 
 def InvertSurface(surf):
@@ -34,7 +36,7 @@ def InvertSurface(surf):
 clock = pygame.time.Clock()
 
 while 1:
-    clock.tick(60)
+    clock.tick(100)
 
     for event in pygame.event.get():
     
@@ -63,6 +65,8 @@ while 1:
     if key[pygame.K_l]:
     	scaleX -= 16
     	scaleY -= 9
+    if key[pygame.K_SPACE]:
+        fOut.write("Pos X: " + str(posX) + " Pos Y: " + str(posY) + " Scale X: " + str(scaleX) + " Scale Y: " + str(scaleY) + " Rotation: " + str(rot) + "\n")
 
 
     screen.fill((255,255,255))
@@ -73,8 +77,8 @@ while 1:
     screen_left.blit(screen_feedback, (posX, posY))
     screen_right.blit(screen_left, (0,0))
     screen_right = pygame.transform.flip(screen_right, True, False)
-    screen.blit(screen_left, (0,0))
-    screen.blit(screen_right, (683,0))
+    screen.blit(screen_left, (5,5))
+    screen.blit(screen_right, (678,5))
     screen_feedback = InvertSurface(screen)
     screen_feedback = pygame.transform.flip(screen_feedback, False, True)
     screen_feedback = pygame.transform.scale(screen_feedback, (scaleX, scaleY))
